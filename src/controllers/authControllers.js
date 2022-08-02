@@ -14,8 +14,8 @@ const register = async (req, res, next) => {
 
 const login = async (req, res, next) => {
     try {
-        const { id } = req.params;
-        const findUser = await userServie.findOneUser(id);
+        const {email} = req.body;
+        const findUser = await userServie.findByEmail(email);
         res.json(findUser)    
     } catch (error) {
         next(error);
