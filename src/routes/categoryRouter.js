@@ -7,6 +7,6 @@ router.get('/', passport.authenticate('jwt', { session: false }), getCategories)
 
 router.post('/', passport.authenticate('jwt', { session: false }), postCategory);
 
-router.put('/:id', updateCategory)
+router.put('/:id', passport.authenticate('jwt', { session: false }), updateCategory)
 
 module.exports = router;
