@@ -1,5 +1,11 @@
 const UserService = require('../services/userService');
+const { config } = require('../config/config');
 const userServie = new UserService();
+
+const jwt = require('jsonwebtoken');
+const passport = require('passport');
+const boom = require('@hapi/boom')
+
 
 const register = async (req, res, next) => {
 
@@ -14,12 +20,22 @@ const register = async (req, res, next) => {
 
 const login = async (req, res, next) => {
     try {
-        const {email} = req.body;
-        const findUser = await userServie.findByEmail(email);
-        res.json(findUser)    
+        const user = req.user;
+
+        const payload = {
+            sub: user.id
+        };
+        const token = jwt.sign(payload, config.jwtSecret);
+
+        res.json({
+            user,
+            token
+        });
+
     } catch (error) {
-        next(error);
+        next(error)
     }
 }
+
 
 module.exports = { register, login };

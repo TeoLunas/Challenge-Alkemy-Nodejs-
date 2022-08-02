@@ -1,13 +1,7 @@
-
 const boom = require('@hapi/boom');
 const bcrypt = require('bcrypt');
-
 const { models } = require('../libs/sequelize');
-
-class userService {
-    constructor(){
-
-    }
+class UserService {
 
     async createUser(data){
         try {
@@ -35,4 +29,4 @@ class userService {
     }
 }
 
-module.exports = userService;
+module.exports = UserService;
