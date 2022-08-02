@@ -13,7 +13,13 @@ const register = async (req, res, next) => {
 }
 
 const login = async (req, res, next) => {
-    res.json({ msg: 'login' });
+    try {
+        const { id } = req.params;
+        const findUser = await userServie.findOneUser(id);
+        res.json(findUser)    
+    } catch (error) {
+        next(error);
+    }
 }
 
 module.exports = { register, login };
