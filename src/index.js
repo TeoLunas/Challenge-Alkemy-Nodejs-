@@ -12,7 +12,7 @@ routerApi(app);
 
 app.use(logErrors);
 app.use(boomErrorHandler);
-app.use(errorHandler)
+app.use(errorHandler);
 
 
 app.listen(3000, () => console.log('app corriendo en puerto 3000'))
