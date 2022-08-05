@@ -24,8 +24,9 @@ const updateCharacters = async(req, res, next) => {
     try {
         const { id } = req.params;
         const data = req.body;
-        const createCharacter = await characterService.updateChatacter(id, data);
-        res.status(200).json(createCharacter);
+        console.log(data);
+        const updateCharacter = await characterService.updateChatacter(id, data);
+        res.status(200).json(updateCharacter);
     } catch (error) {
         next(error)
     }

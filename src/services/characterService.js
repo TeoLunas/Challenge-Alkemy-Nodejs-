@@ -1,5 +1,5 @@
-const { models } = require('../libs/sequelize');
 const boom = require('@hapi/boom')
+const { models } = require('../libs/sequelize');
 
 class CharacterService {
 
@@ -21,13 +21,27 @@ class CharacterService {
         }
     }
 
-    async updateChatacter(id, changes) {
-        const character = await models.Character.findByPk(id);
-        if (!character) {
-            throw boom.notFound('No existe el personaje')
+    async findOneCharacter(id){
+        try {
+            const character = await models.Character.findByPk(id);
+            return character;
+        } catch (error) {
+            if (!character) {
+                throw boom.notFound('Personaje no existe.')
+            }    
         }
-        const update = await character.update(changes);
-        return update
+    }
+
+    async updateChatacter(id, changes) {
+        const character = await this.findOneCharacter(id);
+        try {
+            const update = await character.update(changes);
+            return update
+        } catch (error) {
+            if (!character) {
+                throw boom.notFound('No existe el personaje')
+            }
+        }
     }
 
     async deleteChatacter(id) {
