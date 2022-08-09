@@ -10,6 +10,7 @@ function setupModel(sequelize) {
     Movie.init(MovieSchema, Movie.config(sequelize))
     Character.init(CharactersSchema, Character.config(sequelize))
 
+    Category.associate(sequelize.models)
     Movie.associate(sequelize.models)
     Character.associate(sequelize.models)
 }

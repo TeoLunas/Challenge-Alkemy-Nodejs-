@@ -20,19 +20,24 @@ class CategoryService {
         }
     }
 
-    async findOneCategory(id){
-        try {
-            const category = await models.Category.findByPk(id);
-            return category;
-        } catch (error) {
-            if(!category){
-                throw boom.notFound('Categoria no existe');
-            }
-        }
+    async findOneCategory(id) {
+        // try {
+        //     const category = await models.Category.findByPk(id, {
+        //         include: ['movies']
+        //     });
+        //     return category;
+        // } catch (error) {
+        //     throw boom.notFound('Categoria no existe');
+        // }
+
+        const category = await models.Category.findByPk(id, {
+            include: ['movies']
+        });
+        return category;
     }
 
     async updateCategory(id, changes) {
-        const categorie = await this.findOneCategory(id);
+        const categorie = await models.Category.findByPk(id);
         const updateCategory = await categorie.update(changes);
         return updateCategory;
     }

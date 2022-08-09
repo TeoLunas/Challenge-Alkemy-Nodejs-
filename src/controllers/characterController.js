@@ -42,7 +42,7 @@ const deleteCharacters = async(req, res, next) => {
     }
 }
 
-const find = async(req, res, next) => {
+const findOne = async(req, res, next) => {
     try {
         const { id } = req.params;
         const find = await characterService.findOneCharacter(id);
@@ -52,4 +52,4 @@ const find = async(req, res, next) => {
     }
 }
 
-module.exports = { getCharacters, postCharacters, updateCharacters, deleteCharacters, find }
+module.exports = { getCharacters, postCharacters, updateCharacters, deleteCharacters, findOne }

@@ -4,9 +4,9 @@ const { getMovies, postMovie, updateMovie, deleteMovie, getMovie } = require('..
 const router = express.Router();
 
 
-router.get('/', getMovies);
-router.get('/:id', getMovie);
-router.post('/', postMovie);
+router.get('/', passport.authenticate('jwt', { session: false }), getMovies);
+router.get('/:id', passport.authenticate('jwt', { session: false }), getMovie);
+router.post('/', passport.authenticate('jwt', { session: false }), postMovie);
 router.put('/:id', passport.authenticate('jwt', { session: false }), updateMovie);
 router.delete('/:id', passport.authenticate('jwt', { session: false }), deleteMovie);
 

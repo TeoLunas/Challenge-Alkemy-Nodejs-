@@ -10,6 +10,16 @@ const getCategories = async (req, res, next) => {
     }
 }
 
+const getCategorie = async (req, res, next) => {
+    try {
+        const { id } = req.params;
+        const category = await categoryService.findOneCategory(id);
+         res.json(category);
+    } catch (error) {
+        next(error)
+    }
+}
+
 const postCategory = async (req, res, next) => {
     try {
         const data = req.body;
@@ -36,4 +46,4 @@ const deleteCategory = async(req, res, next) =>{
 }
 
 
-module.exports = { getCategories, postCategory, updateCategory }
+module.exports = { getCategories, postCategory, updateCategory, getCategorie }

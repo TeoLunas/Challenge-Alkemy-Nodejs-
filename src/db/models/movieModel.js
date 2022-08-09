@@ -1,5 +1,7 @@
 const { Model, DataTypes, Sequelize } = require('sequelize');
 
+const { CATEGORY_TABLE } = require('./categoryModel');
+
 const MOVIE_TABLE = 'movies';
 
 const MovieSchema = {
@@ -23,11 +25,17 @@ const MovieSchema = {
         field: 'creation_date',
         type: DataTypes.STRING
     },
-    CategorieId: {
+    categorieId: {
         allowNull: false,
         field: 'categorie_id',
         type: DataTypes.INTEGER,
-        field: 'movie_id'
+        field: 'movie_id',
+        references: {
+            model: CATEGORY_TABLE,
+            key: 'id'
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'SET NULL'
     }
     
 }

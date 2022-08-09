@@ -14,13 +14,20 @@ const CategorySchema = {
         unique: true,
         type: DataTypes.STRING
     },
-    imagen: {
+    image: {
         allowNull: false,
         type: DataTypes.STRING
     }
 }
 
 class Category extends Model {
+    static associate(models){
+        this.hasMany(models.Movie, {
+            as: 'movies',
+            foreignKey: 'categorieId'
+        })
+    }
+
     static config(sequelize) {
         return {
             sequelize,
