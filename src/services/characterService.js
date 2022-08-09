@@ -14,16 +14,20 @@ class CharacterService {
 
     async createChatacter(data) {
         try {
+            console.log(data);
             const createCharacter = await models.Character.create(data);
             return createCharacter;
         } catch (error) {
             throw boom.badRequest('Error al crear personaje')
         }
+
     }
 
     async findOneCharacter(id){
         try {
-            const character = await models.Character.findByPk(id);
+            const character = await models.Character.findByPk(id, {
+                include: ['movie']
+            });
             return character;
         } catch (error) {
             if (!character) {

@@ -1,6 +1,7 @@
 'use strict';
 
-const { MOVIE_TABLE, MovieSchema } = require('../models/movieModel')
+const { MOVIE_TABLE, MovieSchema } = require('../models/movieModel');
+
 
 module.exports = {
   async up (queryInterface) {
@@ -9,5 +10,6 @@ module.exports = {
 
   async down (queryInterface) {
     await queryInterface.dropTable(MOVIE_TABLE)
+
   }
 };

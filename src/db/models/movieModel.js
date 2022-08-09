@@ -33,6 +33,13 @@ const MovieSchema = {
 }
 
 class Movie extends Model {
+    static associate(models){
+        this.hasMany(models.Character, {
+            as: 'characters',
+            foreignKey: 'movieId'
+        })
+    }
+
     static config(sequelize) {
         return {
             sequelize,

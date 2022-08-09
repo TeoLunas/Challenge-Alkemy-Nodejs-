@@ -2,10 +2,20 @@ const MovieService = require('../services/movieService');
 const movieService = new MovieService();
 
 
-const getMovie = async (req, res, next) => {
+const getMovies = async (req, res, next) => {
     try {
         const movies = await movieService.getAllMovies();
         res.status(200).json(movies);
+    } catch (error) {
+        next(error)
+    }
+}
+
+const getMovie = async(req, res, next) => {
+    try {
+        const { id } = req.params;
+        const movie = await movieService.findOneMovie(id);
+        res.status(200).json(movie)
     } catch (error) {
         next(error)
     }
@@ -42,4 +52,4 @@ const deleteMovie = async (req, res, next) => {
     }
 }
 
-module.exports = { getMovie, postMovie, updateMovie, deleteMovie };
+module.exports = { getMovies, postMovie, updateMovie, deleteMovie, getMovie };

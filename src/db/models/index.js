@@ -9,6 +9,9 @@ function setupModel(sequelize) {
     Category.init(CategorySchema, Category.config(sequelize))
     Movie.init(MovieSchema, Movie.config(sequelize))
     Character.init(CharactersSchema, Character.config(sequelize))
+
+    Movie.associate(sequelize.models)
+    Character.associate(sequelize.models)
 }
 
 module.exports = setupModel;

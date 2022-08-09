@@ -1,5 +1,7 @@
 const { Model, DataTypes, Sequelize } = require('sequelize');
 
+const {MOVIE_TABLE} = require('./movieModel');
+
 const CHARACTER_TABLE = 'characters';
 
 const CharactersSchema = {
@@ -30,15 +32,25 @@ const CharactersSchema = {
         allowNull: false,
         type: DataTypes.STRING
     },
-    MovieId: {
+    movieId: {
         allowNull: false,
+        fiel: 'movie_id',
         type: DataTypes.INTEGER,
-        field: 'movie_id'
+        references: {
+            model: MOVIE_TABLE,
+            key: 'id'
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'SET NULL'
     }
 
 }
 
 class Character extends Model {
+    static associate(models){
+        this.belongsTo(models.Movie, {as: 'movie'})
+    }
+
     static config(sequelize) {
         return {
             sequelize,

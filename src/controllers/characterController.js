@@ -45,7 +45,7 @@ const deleteCharacters = async(req, res, next) => {
 const find = async(req, res, next) => {
     try {
         const { id } = req.params;
-        const find = await characterService.findOne(id);
+        const find = await characterService.findOneCharacter(id);
         res.json(find)
     } catch (error) {
         next(error)

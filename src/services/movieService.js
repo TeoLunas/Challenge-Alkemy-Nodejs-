@@ -21,6 +21,18 @@ class MovieService {
         }
     }
 
+    async findOneMovie(id){
+        try {
+            const movie = await models.Movie.findByPk(id, {
+                include: ['characters']
+            });
+            return movie;
+        } catch (error) {
+            throw boom.notFound('No existe la pelicula')
+
+        }
+    }
+
     async updateMovie(id, changes) {
         const movie = await models.Movie.findByPk(id);
         if (!movie) {
