@@ -15,7 +15,7 @@ function routerApi(app) {
     router.use('/movies', movieRouter);
     console.log('Ruta http://localhost:3000/api/v1/movies disponible');
     router.use('/characters', characterRouter);
-    console.log('Ruta http://localhost:3000/api/v1/characters disponible');
+
 }
 
 module.exports = routerApi;
