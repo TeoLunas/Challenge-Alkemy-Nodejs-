@@ -3,63 +3,62 @@ const { models } = require('../libs/sequelize');
 
 class CharacterService {
 
-    async getCharacters () {
+    async createCharacter(data){
         try {
-            const characters = await models.Character.findAll();
+            const newCharaceter = await models.Character.create(data);
+            return newCharaceter;
+        } catch (error) {
+            throw boom.badRequest('Error al crear el personaje')
+        }
+    }
+
+    async getAllCharacters(query){
+        try {
+            const options = { where: {} };
+            const { name, age, movie } = query; 
+            if (name) {
+                options.where.name = name
+            }
+            if (age) {
+                options.where.age = age
+            }
+            if (movie) {
+                options.where.movieId = movie
+            }
+
+            const charactersList = await models.Character.findAll(options);
+            const characters = [];
+            charactersList.forEach( e => {  
+                const {age, weight, history, movieId, ...info} = e.dataValues;
+                characters.push(info)
+            })
             return characters;
         } catch (error) {
-            throw boom.badRequest('Error al buscar personajes');
+            throw boom.badRequest('Error al buscar personajes')
         }
     }
 
-    async createChatacter(data) {
-        try {
-            console.log(data);
-            const createCharacter = await models.Character.create(data);
-            return createCharacter;
-        } catch (error) {
-            throw boom.badRequest('Error al crear personaje')
+    async findOneCharacter(id) {
+        const character = await models.Character.findByPk(id, {
+            include: ['movie']
+        });
+        if (!character) {
+            throw boom.notFound('Personaje no existe en la base de datos.')
         }
-
+        return character;
     }
 
-    async findOneCharacter(id){
-        try {
-            const character = await models.Character.findByPk(id, {
-                include: ['movie']
-            });
-            return character;
-        } catch (error) {
-            if (!character) {
-                throw boom.notFound('Personaje no existe.')
-            }    
-        }
-    }
-
-    async updateChatacter(id, changes) {
+    async updateCharacter(id, changes){
         const character = await this.findOneCharacter(id);
-        try {
-            const update = await character.update(changes);
-            return update
-        } catch (error) {
-            if (!character) {
-                throw boom.notFound('No existe el personaje')
-            }
-        }
+        const updateCharacter = await character.update(changes);
+        return {msg: 'Personaje actualizado', data: updateCharacter};
     }
 
-    async deleteChatacter(id) {
-        const character = await models.Character.findByPk(id);
-        try {
-            await character.destroy();
-            return { msg: 'Personaje eliminada con exito' }
-        } catch (error) {
-            if (!character) {
-                throw boom.notFound('No existe el personaje')
-            }
-        }
+    async deleteCharacter(id){
+        const character = await this.findOneCharacter(id);
+        await character.destroy();
+        return {msg: 'Personaje eliminado con exito'}
     }
-
 
 }
 

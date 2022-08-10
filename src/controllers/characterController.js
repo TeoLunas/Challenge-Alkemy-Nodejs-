@@ -3,7 +3,7 @@ const characterService = new CharacterService();
 
 const getCharacters = async(req, res, next) => {
     try {
-        const characters = await characterService.getCharacters();
+        const characters = await characterService.getAllCharacters(req.query);
         res.status(200).json(characters);
     } catch (error) {
         next(error)
@@ -13,7 +13,7 @@ const getCharacters = async(req, res, next) => {
 const postCharacters = async(req, res, next) => {
     try {
         const data = req.body;
-        const createCharacter = await characterService.createChatacter(data);
+        const createCharacter = await characterService.createCharacter(data);
         res.status(200).json(createCharacter);
     } catch (error) {
         next(error)
@@ -25,7 +25,7 @@ const updateCharacters = async(req, res, next) => {
         const { id } = req.params;
         const data = req.body;
         console.log(data);
-        const updateCharacter = await characterService.updateChatacter(id, data);
+        const updateCharacter = await characterService.updateCharacter(id, data);
         res.status(200).json(updateCharacter);
     } catch (error) {
         next(error)
@@ -35,7 +35,7 @@ const updateCharacters = async(req, res, next) => {
 const deleteCharacters = async(req, res, next) => {
     try {
         const { id } = req.params;
-        const deleteCharacter = await characterService.deleteChatacter(id);
+        const deleteCharacter = await characterService.deleteCharacter(id);
         res.status(200).json(deleteCharacter);
     } catch (error) {
         next(error)   
