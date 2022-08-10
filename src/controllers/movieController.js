@@ -4,7 +4,7 @@ const movieService = new MovieService();
 
 const getMovies = async (req, res, next) => {
     try {
-        const movies = await movieService.getAllMovies();
+        const movies = await movieService.getAllMovies(req.query)
         res.status(200).json(movies);
     } catch (error) {
         next(error)
@@ -14,7 +14,7 @@ const getMovies = async (req, res, next) => {
 const getMovie = async(req, res, next) => {
     try {
         const { id } = req.params;
-        const movie = await movieService.findOneMovie(id);
+        const movie = await movieService.getOneMovie(id);
         res.status(200).json(movie)
     } catch (error) {
         next(error)
