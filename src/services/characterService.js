@@ -28,8 +28,8 @@ class CharacterService {
 
             const charactersList = await models.Character.findAll(options);
             const characters = [];
-            charactersList.forEach( e => {  
-                const {age, weight, history, movieId, ...info} = e.dataValues;
+            charactersList.forEach( character => {  
+                const {age, weight, history, movieId, ...info} = character.dataValues;
                 characters.push(info)
             })
             return characters;
