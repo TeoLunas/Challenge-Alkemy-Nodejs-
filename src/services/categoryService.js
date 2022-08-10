@@ -21,25 +21,32 @@ class CategoryService {
     }
 
     async findOneCategory(id) {
-        // try {
-        //     const category = await models.Category.findByPk(id, {
-        //         include: ['movies']
-        //     });
-        //     return category;
-        // } catch (error) {
-        //     throw boom.notFound('Categoria no existe');
-        // }
-
         const category = await models.Category.findByPk(id, {
             include: ['movies']
         });
-        return category;
+        console.log(category);
+        try {
+            return category;
+        } catch (error) {
+            if (category === 'null') {
+                throw boom.notFound('Categoria no existe');
+            }
+        }
     }
 
     async updateCategory(id, changes) {
-        const categorie = await models.Category.findByPk(id);
+        const category = await models.Category.findByPk(id);
         const updateCategory = await categorie.update(changes);
         return updateCategory;
+    }
+
+    async deleteCategory(id){
+        const categorie = await models.Category.findByPk(id);
+        if(!category){
+            throw boom.notFound('Categoria no existe');
+        }
+        await categorie.destroy();
+        return 'Categoria eliminada con exito'
     }
 }
 
