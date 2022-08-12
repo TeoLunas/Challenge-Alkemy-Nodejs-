@@ -13,10 +13,25 @@ const router = express.Router();
  *          title:
  *              type: string
  *              description: Nombre de la pelicula o serie
+ *          image:
+ *              type: string
+ *              description: URL de la imagen
+ *          creationDate:
+ *              type: string
+ *              description: Fecha de creacion de la pelicula
+ *          categorieId:
+ *              type: integer
+ *              description: Id de la categoria de la pelicula
  *        required:
  *          - title
+ *          - image
+ *          - creationDate
+ *          - categorieId
  *        example:
  *          title: Encanto
+ *          image:  http://example.com 
+ *          creationDate: 01/01/2021
+ *          categorieId: 1
  */
 
 router.get('/', passport.authenticate('jwt', { session: false }), getMovies);

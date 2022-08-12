@@ -3,8 +3,9 @@ const routerApi = require('./routes/index')
 const { logErrors, errorHandler, boomErrorHandler } = require('./middlewares/errorHandler');
 const { config } = require('./config/config');
 const path = require('path')
+const PORT = config.dbPort || 3000;
 
-//Swagger
+//Swagger config
 const swaggerUI = require('swagger-ui-express');
 const swaggerJsDoc = require('swagger-jsdoc');
 const swaggerSpec = {
@@ -25,11 +26,11 @@ app.use(express.json())
 require('./utils/auth');
 
 routerApi(app)
-app.use('/api/doc', swaggerUI.serve, swaggerUI.setup(swaggerJsDoc(swaggerSpec)))
+app.use('/api/doc', swaggerUI.serve, swaggerUI.setup(swaggerJsDoc(swaggerSpec)));
 
 app.use(logErrors);
 app.use(boomErrorHandler);
 app.use(errorHandler);
 
 
-app.listen(config.dbPort, () => console.log(`app corriendo en puerto ${config.dbPort}`))
+app.listen(3000, () => console.log(`app corriendo en puerto 3000`))
