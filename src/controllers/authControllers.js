@@ -1,18 +1,18 @@
 const UserService = require('../services/userService');
-const { config } = require('../config/config');
 const userServie = new UserService();
 
-const jwt = require('jsonwebtoken');
-const passport = require('passport');
-const boom = require('@hapi/boom')
-
+const AuthService = require('../services/authService');
+const authService = new AuthService();
 
 const register = async (req, res, next) => {
-
     try {
         const data = req.body;
         const createUser = await userServie.createUser(data);
-        res.json(createUser);
+        const sendMail = await authService.sendMail(data.email);
+        res.json({
+            msg: createUser,
+            sendMail
+        });
     } catch (error) {
         console.log(error);
     }
@@ -21,17 +21,7 @@ const register = async (req, res, next) => {
 const login = async (req, res, next) => {
     try {
         const user = req.user;
-
-        const payload = {
-            sub: user.id
-        };
-        const token = jwt.sign(payload, config.jwtSecret);
-
-        res.json({
-            user,
-            token
-        });
-
+        res.json(authService.signToken(user))
     } catch (error) {
         next(error)
     }

@@ -10,6 +10,7 @@ class UserService {
                 ...data,
                 password: encryptPassword
             });
+            delete createUser.dataValues.password
             return createUser;            
         } catch (error) {
             throw boom.badRequest('Error al crear usuario')
