@@ -6,7 +6,8 @@ const userService = new UserService();
 const jwt = require('jsonwebtoken');
 const nodemailer = require('nodemailer')
 
-const { config } = require('../config/config')
+const { config } = require('../config/config');
+const Mail = require('nodemailer/lib/mailer');
 
 class AuthService {
 
@@ -42,20 +43,20 @@ class AuthService {
             host: 'smtp.ethereal.email',
             port: 587,
             auth: {
-                user: 'berta69@ethereal.email',
-                pass: 'dbnP5kwe1CAsvK5ZC7'
+                user: config.emailServer,
+                pass: config.emailServerPassword
             }
         })
 
         await transporter.sendMail({
-            from: 'berta69@ethereal.email',
-            to: 'berta69@ethereal.email',
+            from: config.emailServer,
+            to: email,
             subject: `Bienvenido ${email}`,
             text: 'Bienvenido a la api de disney',
-            html: '<b> Bienvenido a la api de disney </b>',
+            html: '<b> Bienvenido a la api de disney, ya puedes comenzar a ver y registrar personajes </b>',
         })
 
-        return { message: 'Mail sent'}
+        return { message: 'Mail sent', to: `${email}`}
     }
 }
 
