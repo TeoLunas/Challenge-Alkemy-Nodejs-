@@ -53,7 +53,7 @@ class AuthService {
             to: email,
             subject: `Bienvenido ${email}`,
             text: 'Bienvenido a la api de disney',
-            html: '<b> Bienvenido a la api de disney, ya puedes comenzar a ver y registrar personajes </b>',
+            html: '<b> Bienvenido a la api de disney, ya puedes comenzar a ver y registrar personajes, peliculas y categorias </b>',
         })
 
         return { message: 'Mail sent', to: `${email}`}
