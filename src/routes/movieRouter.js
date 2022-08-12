@@ -131,7 +131,7 @@ router.put('/:id', passport.authenticate('jwt', { session: false }), updateMovie
  *                      $ref: '#/components/schemas/Movie'
  *      responses:
  *          200:
- *              description: nueva peliculada creada!
+ *              description: pelicula actualizada!
  *          401:
  *              description: No se envio token para validar a usuario
  *          404:
