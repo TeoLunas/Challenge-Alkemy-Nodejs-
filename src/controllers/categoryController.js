@@ -3,8 +3,8 @@ const categoryService = new CategoryService();
 
 const getCategories = async (req, res, next) => {
     try {
-        const categories = await categoryService.getAllCategories();
-         resres.status(200).json(categories);
+        const categories = await categoryService.getCategories();
+        res.status(200).json(categories);
     } catch (error) {
         next(error)
     }
@@ -13,7 +13,7 @@ const getCategories = async (req, res, next) => {
 const getCategorie = async (req, res, next) => {
     try {
         const { id } = req.params;
-        const category = await categoryService.findOneCategory(id);
+        const category = await categoryService.getOneCategory(id);
         res.status(200).json(category);
     } catch (error) {
         next(error)
@@ -24,7 +24,7 @@ const postCategory = async (req, res, next) => {
     try {
         const data = req.body;
         const createCategory = await categoryService.createCategory(data);
-        resres.status(200).json(createCategory);
+        res.status(200).json(createCategory);
     } catch (error) {
         next(error)
     }
@@ -45,7 +45,7 @@ const deleteCategory = async(req, res, next) =>{
     try {
         const { id } = req.params;
         const deleteCategory = await categoryService.deleteCategory(id);
-        return deleteCategory
+        res.status(200).json(deleteCategory)
     } catch (error) {
         next(error)
     }

@@ -92,6 +92,8 @@ router.post('/', passport.authenticate('jwt', { session: false }), postCategory)
  *              description: nueva categoria creada!
  *          401:
  *              description: No se envio token para validar a usuario
+ *          409:
+ *              description: Ya existe esa categoria
  *      
  */
 router.put('/:id', passport.authenticate('jwt', { session: false }), updateCategory)
@@ -124,7 +126,7 @@ router.put('/:id', passport.authenticate('jwt', { session: false }), updateCateg
  *              description: Movie not found
  *      
  */
-router.delete('/', passport.authenticate('jwt', { session: false }), deleteCategory);
+router.delete('/:id', passport.authenticate('jwt', { session: false }), deleteCategory);
 //Delete movie
 /**
  * @swagger

@@ -2,51 +2,42 @@ const { models } = require('../libs/sequelize');
 const boom = require('@hapi/boom');
 
 class CategoryService {
-    async createCategory (data) {
-        try {
-            const newCategory = await models.Category.create(data);
-            return newCategory;
-        } catch (error) {
-            throw boom.badRequest('error al crear categoria')
-        }
-    }
-
-    async getAllCategories() {
-        try {
-            const categories = await models.Category.findAll();
-            return categories;
-        } catch (error) {
-            throw boom.notFound('No existen categorias')
-        }
-    }
-
-    async findOneCategory(id) {
-        const category = await models.Category.findByPk(id, {
-            include: ['movies']
-        });
-        console.log(category);
-        try {
-            return category;
-        } catch (error) {
-            if (category === 'null') {
-                throw boom.notFound('Categoria no existe');
+    async createCategory(data){
+        const validateCategoryExists = await models.Category.findAll({
+            where: {
+                name: data.name
             }
+        });
+        if(validateCategoryExists){
+            throw boom.conflict('Ya existe esa categoria')
         }
+        const create = await models.Category.create(data);
+        return create
     }
 
-    async updateCategory(id, changes) {
+    async getCategories(){
+        const categories = await models.Category.findAll();
+        return categories;
+    }
+
+    async getOneCategory(id){
         const category = await models.Category.findByPk(id);
-        const updateCategory = await categorie.update(changes);
-        return updateCategory;
+        if (!category) {
+            throw boom.notFound('Categoria no encontrada')
+        }
+        return category;
+    }
+
+    async updateCategory(id, changes){
+        const category = await this.getOneCategory(id);
+        const update = await category.update(changes);
+        return { msg: 'Categoria actualizada con exito', update }
     }
 
     async deleteCategory(id){
-        const categorie = await models.Category.findByPk(id);
-        if(!category){
-            throw boom.notFound('Categoria no existe');
-        }
-        await categorie.destroy();
-        return 'Categoria eliminada con exito'
+        const category = await this.getOneCategory(id);
+        await category.destroy();
+        return { msg: 'Categoria Eliminada con exito' }
     }
 }
 
